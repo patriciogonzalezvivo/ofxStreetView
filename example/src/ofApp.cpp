@@ -2,17 +2,24 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+    ofSetVerticalSync(true);
+    ofEnableDepthTest();
+    
+    streetview.setPanoId("y6IoTWYSOZbFBfA1OXCJCA");
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    streetview.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    ofBackground(0);
+    
+    cam.begin();
+    streetview.draw();
+    cam.end();
 }
 
 //--------------------------------------------------------------

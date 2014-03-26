@@ -27,22 +27,16 @@ ofxStreetView::ofxStreetView(double _lat, double _lon){
     setLatLon(_lat,_lon);
 }
 
-ofxStreetView::ofxStreetView(Location _location){
-    ofxStreetView();
-    setLocation(_location);
-}
-
 ofxStreetView::~ofxStreetView(){
     if(bRegister){
         ofUnregisterURLNotification(this);
         bRegister = false;
     }
-    clear();
 }
 
 void ofxStreetView::clear(){
-    loc.lat = 0;
-    loc.lon = 0;
+    lat = 0;
+    lon = 0;
     bDataLoaded = false;
     bPanoLoaded = false;
     
@@ -62,10 +56,6 @@ void ofxStreetView::setUseTexture(bool _bUseTex){
         downloadPanorama();
     }
     bTexture = _bUseTex;
-}
-
-void ofxStreetView::setLocation(Location _loc){
-    setLatLon(_loc.lat,_loc.lon);
 }
 
 void ofxStreetView::setLatLon(double _lat, double _lon){
@@ -101,8 +91,8 @@ void ofxStreetView::urlResponse(ofHttpResponse & response){
         XML.loadFromBuffer(response.data);
         
         pano_id = XML.getAttribute("panorama:data_properties", "pano_id", "");
-        loc.lat = XML.getAttribute("panorama:data_properties", "original_lat", 0.0);
-        loc.lon = XML.getAttribute("panorama:data_properties", "original_lng", 0.0);
+        lat = XML.getAttribute("panorama:data_properties", "original_lat", 0.0);
+        lon = XML.getAttribute("panorama:data_properties", "original_lng", 0.0);
         num_zoom_levels = XML.getAttribute("panorama:data_properties", "num_zoom_levels", 0);
         
         pano_yaw_deg = XML.getAttribute("panorama:projection_properties", "pano_yaw_deg", 0.0);
@@ -148,11 +138,11 @@ void ofxStreetView::downloadPanorama(){
             }
         }
         
-        //Decode the depth map
-        //The depth map is encoded as a series of pixels in a 512x256 image. Each pixels refers
-        //to a depthMapPlane which are also encoded in the data. Each depthMapPlane has three elements:
-        //The x,y,z normals and the closest distance the plane has to the origin. This uniquely
-        //identifies the plane in 3d space.
+        //  Decode the depth map ( Credits to Paul Wagener https://github.com/PaulWagener/Streetview-Explorer )
+        //  The depth map is encoded as a series of pixels in a 512x256 image. Each pixels refers
+        //  to a depthMapPlane which are also encoded in the data. Each depthMapPlane has three elements:
+        //  The x,y,z normals and the closest distance the plane has to the origin. This uniquely
+        //  identifies the plane in 3d space.
         //
         if(depth_map_base64 != ""){
             //Decode base64
@@ -191,39 +181,6 @@ void ofxStreetView::downloadPanorama(){
 }
 
 void ofxStreetView::makeDepthMesh(){
-//    ofPixels depthPixels;
-//    depthPixels.allocate(mapWidth, mapHeight, 1);
-//    for (int x = 0; x < mapWidth; x++) {
-//        for(int y = 0; y < mapHeight; y++){
-//            int planeId = depthmapIndices[y * mapWidth + x];
-//            
-//            if(planeId>0){
-//                float rad_azimuth = x / (float) (mapWidth - 1.0f) * TWO_PI;
-//                float rad_elevation = y / (float) (mapHeight - 1.0f) * PI;
-//
-//                //Calculate the cartesian position of this vertex (if it was at unit distance)
-//                ofPoint xyz;
-//                xyz.x = sin(rad_elevation) * sin(rad_azimuth);
-//                xyz.y = sin(rad_elevation) * cos(rad_azimuth);
-//                xyz.z = cos(rad_elevation);
-//                
-//                DepthMapPlane plane = depthmapPlanes[planeId];
-//                float dist = plane.d / (xyz.x*plane.x + xyz.y*plane.y + xyz.z*plane.z);
-//                xyz *= dist;
-//                
-//                if(xyz.length() > maxDistance){
-//                    depthPixels.setColor(x, y,ofColor(0));
-//                } else {
-//                    depthPixels.setColor(x, y,ofColor(maxDistance-xyz.length()));
-//                }
-//            } else {
-//                depthPixels.setColor(x, y,ofColor(0.0));
-//            }
-//        }
-//    }
-//    depthImage.setFromPixels(depthPixels);
-    
-
     meshDepth.clear();
     meshDepth.setMode(OF_PRIMITIVE_TRIANGLES);    
     for (int x = 0; x < mapWidth - 1; x ++) {
@@ -236,83 +193,46 @@ void ofxStreetView::makeDepthMesh(){
         for (unsigned int y = 0; y < endHeight; y ++) {
             const int next_y = y + 1;
             
-            addDepthVertexAtAzimuthElevation(next_x, y);
-            addDepthVertexAtAzimuthElevation(x, y);
-            addDepthVertexAtAzimuthElevation(x, next_y);
+            addVertex(next_x, y);
+            addVertex(x, y);
+            addVertex(x, next_y);
             
-            addDepthVertexAtAzimuthElevation(x, next_y);
-            addDepthVertexAtAzimuthElevation(next_x, next_y);
-            addDepthVertexAtAzimuthElevation(next_x, y);
+            addVertex(x, next_y);
+            addVertex(next_x, next_y);
+            addVertex(next_x, y);
             
         }
     }
 }
 
-bool ofxStreetView::isDepthVertexVisible(int x, int y) {
-    //Make sure the pixel is on the map
-    if (x < 0) x += mapWidth;
-    if (y < 0) y += mapHeight;
-    if (x >= mapWidth) x -= mapWidth;
-    if (y >= mapHeight) y -= mapHeight;
-    
-    int depthMapIndex = depthmapIndices[y * mapWidth + x];
-    
-    return depthMapIndex != 0;
-}
-
-bool ofxStreetView::isDepthVertexTransparant(int x, int y, int horizontal_step) {
-    if (y > 0 && y < mapHeight - 1) {
-        for (int _x = -horizontal_step; _x <= horizontal_step; _x += horizontal_step) {
-            for (int _y = -1; _y <= 1; _y++) {
-                if (!isDepthVertexVisible(x + _x, y + _y))
-                    return true;
-            }
-        }
-    }
-    return false;
-}
-
-void ofxStreetView::addDepthVertexAtAzimuthElevation(int x, int y){
+void ofxStreetView::addVertex(int x, int y){
     float rad_azimuth = x / (float) (mapWidth - 1.0f) * TWO_PI;
     float rad_elevation = y / (float) (mapHeight - 1.0f) * PI;
     
-    //Calculate the cartesian position of this vertex (if it was at unit distance)
-    ofPoint xyz;
-    xyz.x = sin(rad_elevation) * sin(rad_azimuth);
-    xyz.y = sin(rad_elevation) * cos(rad_azimuth);
-    xyz.z = cos(rad_elevation);
+    ofPoint pos;
+    pos.x = sin(rad_elevation) * sin(rad_azimuth);
+    pos.y = sin(rad_elevation) * cos(rad_azimuth);
+    pos.z = cos(rad_elevation);
     float distance = 1;
     
     ofPoint normal;
     
-    //Value that is safe to use to retrieve stuff from the index arrays
     const int map_x = x % mapWidth;
     
-    //Calculate distance of point according to the depth map data.
     int depthMapIndex = depthmapIndices[y * mapWidth + map_x];
     if (depthMapIndex == 0) {
-        //Distance of sky
         distance = maxDistance;
-        normal = xyz;
+        normal = pos;
         normal.normalize();
     } else {
         DepthMapPlane plane = depthmapPlanes[depthMapIndex];
-        distance = -plane.d/(plane.x * xyz.x + plane.y * xyz.y + -plane.z * xyz.z);
+        distance = -plane.d/(plane.x * pos.x + plane.y * pos.y + -plane.z * pos.z);
         normal.set(plane.x,plane.y,plane.z);
     }
     
-    ofVec2f texCoord = ofVec2f((x/(float)mapWidth)*getWidth(),(y/(float)mapHeight)*getHeight());
-    xyz *= distance;
-    
-    //    meshDepth.addColor(ofFloatColor(1,0.5));//x/(float)mapWidth,y/(float)mapHeight,0.0));
-    
     meshDepth.addNormal(normal);
-    meshDepth.addTexCoord(texCoord);
-    meshDepth.addVertex(xyz);
-}
-
-Location ofxStreetView::getLocation(){
-    return loc;
+    meshDepth.addTexCoord(ofVec2f((x/(float)mapWidth)*getWidth(),(y/(float)mapHeight)*getHeight()));
+    meshDepth.addVertex(pos*distance);
 }
 
 string ofxStreetView::getCloseLinkTo(float _deg){
@@ -356,7 +276,46 @@ ofTexture& ofxStreetView::getTextureReference(){
     if(!panoFbo.isAllocated()){
         panoFbo.allocate(getWidth(),getHeight());
     }
-    
+
+    return panoFbo.getTextureReference();
+}
+
+ofImage ofxStreetView::getDepthMap(){
+    ofImage depthImage;
+    ofPixels depthPixels;
+    depthImage.allocate(mapWidth, mapHeight, OF_IMAGE_GRAYSCALE);
+    depthPixels.allocate(mapWidth, mapHeight, 1);
+    for (int x = 0; x < mapWidth; x++) {
+        for(int y = 0; y < mapHeight; y++){
+            int planeId = depthmapIndices[y * mapWidth + x];
+            if(planeId>0){
+                float rad_azimuth = x / (float) (mapWidth - 1.0f) * TWO_PI;
+                float rad_elevation = y / (float) (mapHeight - 1.0f) * PI;
+                
+                ofPoint pos;
+                pos.x = sin(rad_elevation) * sin(rad_azimuth);
+                pos.y = sin(rad_elevation) * cos(rad_azimuth);
+                pos.z = cos(rad_elevation);
+                
+                DepthMapPlane plane = depthmapPlanes[planeId];
+                float dist = plane.d / (pos.x*plane.x + pos.y*plane.y + pos.z*plane.z);
+                
+                pos *= dist;
+                
+                if(pos.length() > maxDistance){
+                    depthPixels.setColor(x, y,ofColor(0));
+                } else {
+                    depthPixels.setColor(x, y,ofColor(maxDistance-pos.length()));
+                }
+            } else {
+                depthPixels.setColor(x, y,ofColor(0.0));
+            }
+        }
+    }
+    depthImage.setFromPixels(depthPixels);
+}
+
+void ofxStreetView::update(){
     if(bDataLoaded && !bPanoLoaded){
         panoFbo.begin();
         ofClear(0,0);
@@ -378,30 +337,13 @@ ofTexture& ofxStreetView::getTextureReference(){
             bPanoLoaded = true;
         }
     }
-    
-    return panoFbo.getTextureReference();
 }
 
-ofTexture ofxStreetView::getTextureAt(float _deg, float _amp){
-    float widthDeg = getWidth()/360.0;
-    
-    float offsetX = widthDeg*(pano_yaw_deg-360-_deg+90);
-    float amplitud = widthDeg*_amp;
-    
-    ofFbo roi;
-    roi.allocate(widthDeg*_amp, getHeight());
-    
-    roi.begin();
-    ofClear(0,0);
-    
-    getTextureReference().draw(-offsetX+amplitud*0.5-getWidth()*2.0,0);
-    getTextureReference().draw(-offsetX+amplitud*0.5-getWidth(),0);
-    getTextureReference().draw(-offsetX+amplitud*0.5,0);
-    if(offsetX+amplitud>getWidth()){
-        getTextureReference().draw(-offsetX+amplitud*0.5+getWidth(),0);
-    }
-    
-    roi.end();
-    
-    return roi.getTextureReference();
+void ofxStreetView::draw(){
+    ofPushMatrix();
+    ofRotate(getDirection(), 0, 0, 1);
+    getTextureReference().bind();
+    meshDepth.draw();
+    getTextureReference().unbind();
+    ofPopMatrix();
 }
