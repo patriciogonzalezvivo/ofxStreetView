@@ -1,1 +1,2 @@
-ofxGoogleStreetView
+ofxStreetView
+ofxXmlSettings

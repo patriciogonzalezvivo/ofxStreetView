@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2813566ecee3c48a64ed2b9bab681d16 /* ofxStreetView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 660ce995535ab3e783eadf127afa1359 /* ofxStreetView.cpp */; };
-		2cc85fcae9821d57e61a22e05ecd8b32 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = dd440ecf2d1343bfa63edf9eabf93975 /* base64.cpp */; };
-		3DC4338918E33E9800EE1AAB /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DC4338218E33E9800EE1AAB /* tinyxml.cpp */; };
-		3DC4338A18E33E9800EE1AAB /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DC4338418E33E9800EE1AAB /* tinyxmlerror.cpp */; };
-		3DC4338B18E33E9800EE1AAB /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DC4338518E33E9800EE1AAB /* tinyxmlparser.cpp */; };
-		3DC4338C18E33E9800EE1AAB /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DC4338718E33E9800EE1AAB /* ofxXmlSettings.cpp */; };
+		17903e47a0ab9166ca9d3f8322306404 /* ofxStreetView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = de2b15c57801bee5a34036956f97300b /* ofxStreetView.cpp */; };
+		5a4349e9754d6fa14c0f2a3a1abc30b6 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = fc5da1c87211d4f6377da7199d8c5a1e /* tinyxmlparser.cpp */; };
+		63b57ac5bf4ef088491e0317dbb2ecaa /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50df87d612c5aae17aafa6c02c6bc570 /* ofxXmlSettings.cpp */; };
+		933a2227713c720ceff80fd967d0a8ee /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2b40eda85beb63e46785bc299a638898 /* tinyxml.cpp */; };
+		9d44dc88ef9e7991b4a09951e2e4769f /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 832bdc407620cdba568b713d2252c43c /* tinyxmlerror.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -33,6 +32,7 @@
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
+		ede41538fc9c9c5b7947e867608c6130 /* base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83309f697184ec53252490bf27b8bafe /* base64.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,14 +66,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3DC4338218E33E9800EE1AAB /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
-		3DC4338318E33E9800EE1AAB /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
-		3DC4338418E33E9800EE1AAB /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
-		3DC4338518E33E9800EE1AAB /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
-		3DC4338718E33E9800EE1AAB /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
-		3DC4338818E33E9800EE1AAB /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
-		660ce995535ab3e783eadf127afa1359 /* ofxStreetView.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxStreetView.cpp; path = ../../../addons/ofxGoogleStreetView/src/ofxStreetView.cpp; sourceTree = SOURCE_ROOT; };
-		92896c4a0d606a97d504789490d7c5b1 /* base64.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = base64.h; path = ../../../addons/ofxGoogleStreetView/src/base64.h; sourceTree = SOURCE_ROOT; };
+		01dcc0911400f9acf5b65578af4ec8f9 /* ofxXmlSettings.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxXmlSettings.h; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.h; sourceTree = SOURCE_ROOT; };
+		0c9648078b7e28d697c135aeb1b62539 /* base64.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = base64.h; path = ../../../addons/ofxStreetView/src/base64.h; sourceTree = SOURCE_ROOT; };
+		2b40eda85beb63e46785bc299a638898 /* tinyxml.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxml.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxml.cpp; sourceTree = SOURCE_ROOT; };
+		50df87d612c5aae17aafa6c02c6bc570 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxXmlSettings.cpp; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.cpp; sourceTree = SOURCE_ROOT; };
+		832bdc407620cdba568b713d2252c43c /* tinyxmlerror.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxmlerror.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
+		83309f697184ec53252490bf27b8bafe /* base64.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = base64.cpp; path = ../../../addons/ofxStreetView/src/base64.cpp; sourceTree = SOURCE_ROOT; };
+		942be3170d8c7c09177d60c54ab2552f /* ofxStreetView.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxStreetView.h; path = ../../../addons/ofxStreetView/src/ofxStreetView.h; sourceTree = SOURCE_ROOT; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -98,8 +97,9 @@
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
-		dd440ecf2d1343bfa63edf9eabf93975 /* base64.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = base64.cpp; path = ../../../addons/ofxGoogleStreetView/src/base64.cpp; sourceTree = SOURCE_ROOT; };
-		ddfa1ae0fcf9d94bac1c2006fa4f4ea8 /* ofxStreetView.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxStreetView.h; path = ../../../addons/ofxGoogleStreetView/src/ofxStreetView.h; sourceTree = SOURCE_ROOT; };
+		b21e7e5f548eea92f368040bb1aa2f69 /* tinyxml.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = tinyxml.h; path = ../../../addons/ofxXmlSettings/libs/tinyxml.h; sourceTree = SOURCE_ROOT; };
+		de2b15c57801bee5a34036956f97300b /* ofxStreetView.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxStreetView.cpp; path = ../../../addons/ofxStreetView/src/ofxStreetView.cpp; sourceTree = SOURCE_ROOT; };
+		fc5da1c87211d4f6377da7199d8c5a1e /* tinyxmlparser.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxmlparser.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,43 +130,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3DC4338018E33E9800EE1AAB /* ofxXmlSettings */ = {
+		1f4fb5c423662b96adfdcc0badec1cb0 /* ofxXmlSettings */ = {
 			isa = PBXGroup;
 			children = (
-				3DC4338118E33E9800EE1AAB /* libs */,
-				3DC4338618E33E9800EE1AAB /* src */,
+				6ecef0d76bc33727823eadffc320c44d /* src */,
+				6e54289412d2d94f45a051132369530c /* libs */,
 			);
 			name = ofxXmlSettings;
-			path = ../../ofxXmlSettings;
 			sourceTree = "<group>";
 		};
-		3DC4338118E33E9800EE1AAB /* libs */ = {
+		3549f8979b5aae3b092021defc413add /* ofxStreetView */ = {
 			isa = PBXGroup;
 			children = (
-				3DC4338218E33E9800EE1AAB /* tinyxml.cpp */,
-				3DC4338318E33E9800EE1AAB /* tinyxml.h */,
-				3DC4338418E33E9800EE1AAB /* tinyxmlerror.cpp */,
-				3DC4338518E33E9800EE1AAB /* tinyxmlparser.cpp */,
+				82c342685e3a9be4e7ccff0cdde21583 /* src */,
 			);
-			path = libs;
+			name = ofxStreetView;
 			sourceTree = "<group>";
 		};
-		3DC4338618E33E9800EE1AAB /* src */ = {
+		6e54289412d2d94f45a051132369530c /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				3DC4338718E33E9800EE1AAB /* ofxXmlSettings.cpp */,
-				3DC4338818E33E9800EE1AAB /* ofxXmlSettings.h */,
+				2b40eda85beb63e46785bc299a638898 /* tinyxml.cpp */,
+				b21e7e5f548eea92f368040bb1aa2f69 /* tinyxml.h */,
+				832bdc407620cdba568b713d2252c43c /* tinyxmlerror.cpp */,
+				fc5da1c87211d4f6377da7199d8c5a1e /* tinyxmlparser.cpp */,
 			);
-			path = src;
+			name = libs;
 			sourceTree = "<group>";
 		};
-		7acbc895f2471318aa4cf79b648a15fc /* src */ = {
+		6ecef0d76bc33727823eadffc320c44d /* src */ = {
 			isa = PBXGroup;
 			children = (
-				dd440ecf2d1343bfa63edf9eabf93975 /* base64.cpp */,
-				92896c4a0d606a97d504789490d7c5b1 /* base64.h */,
-				660ce995535ab3e783eadf127afa1359 /* ofxStreetView.cpp */,
-				ddfa1ae0fcf9d94bac1c2006fa4f4ea8 /* ofxStreetView.h */,
+				50df87d612c5aae17aafa6c02c6bc570 /* ofxXmlSettings.cpp */,
+				01dcc0911400f9acf5b65578af4ec8f9 /* ofxXmlSettings.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		82c342685e3a9be4e7ccff0cdde21583 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				83309f697184ec53252490bf27b8bafe /* base64.cpp */,
+				0c9648078b7e28d697c135aeb1b62539 /* base64.h */,
+				de2b15c57801bee5a34036956f97300b /* ofxStreetView.cpp */,
+				942be3170d8c7c09177d60c54ab2552f /* ofxStreetView.h */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -174,7 +181,8 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				e503d9765f6f645c5971336a150c7d36 /* ofxGoogleStreetView */,
+				3549f8979b5aae3b092021defc413add /* ofxStreetView */,
+				1f4fb5c423662b96adfdcc0badec1cb0 /* ofxXmlSettings */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -243,8 +251,8 @@
 			isa = PBXGroup;
 			children = (
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
-				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
+				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -256,15 +264,6 @@
 				E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */,
 			);
 			name = openFrameworks;
-			sourceTree = "<group>";
-		};
-		e503d9765f6f645c5971336a150c7d36 /* ofxGoogleStreetView */ = {
-			isa = PBXGroup;
-			children = (
-				3DC4338018E33E9800EE1AAB /* ofxXmlSettings */,
-				7acbc895f2471318aa4cf79b648a15fc /* src */,
-			);
-			name = ofxGoogleStreetView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -354,14 +353,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DC4338A18E33E9800EE1AAB /* tinyxmlerror.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
-				3DC4338C18E33E9800EE1AAB /* ofxXmlSettings.cpp in Sources */,
-				3DC4338918E33E9800EE1AAB /* tinyxml.cpp in Sources */,
-				3DC4338B18E33E9800EE1AAB /* tinyxmlparser.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
-				2cc85fcae9821d57e61a22e05ecd8b32 /* base64.cpp in Sources */,
-				2813566ecee3c48a64ed2b9bab681d16 /* ofxStreetView.cpp in Sources */,
+				ede41538fc9c9c5b7947e867608c6130 /* base64.cpp in Sources */,
+				17903e47a0ab9166ca9d3f8322306404 /* ofxStreetView.cpp in Sources */,
+				63b57ac5bf4ef088491e0317dbb2ecaa /* ofxXmlSettings.cpp in Sources */,
+				933a2227713c720ceff80fd967d0a8ee /* tinyxml.cpp in Sources */,
+				9d44dc88ef9e7991b4a09951e2e4769f /* tinyxmlerror.cpp in Sources */,
+				5a4349e9754d6fa14c0f2a3a1abc30b6 /* tinyxmlparser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,8 +399,10 @@
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,
-					../../../addons/ofxGoogleStreetView/libs,
-					../../../addons/ofxGoogleStreetView/src,
+					../../../addons/ofxStreetView/libs,
+					../../../addons/ofxStreetView/src,
+					../../../addons/ofxXmlSettings/libs,
+					../../../addons/ofxXmlSettings/src,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -438,8 +439,10 @@
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,
-					../../../addons/ofxGoogleStreetView/libs,
-					../../../addons/ofxGoogleStreetView/src,
+					../../../addons/ofxStreetView/libs,
+					../../../addons/ofxStreetView/src,
+					../../../addons/ofxXmlSettings/libs,
+					../../../addons/ofxXmlSettings/src,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CPLUSPLUSFLAGS = (
