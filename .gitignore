@@ -1,0 +1,72 @@
+# Some general ignore patterns
+build/
+obj/
+*.o
+Debug*/
+Release*/
+*.mode*
+*.app/
+*.pyc
+.svn/
+
+
+#XCode
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.mode1v3
+*.mode2v3
+#XCode 4
+xcuserdata
+*.xcworkspace
+
+#Code::Blocks
+*.depend
+*.layout
+
+#Visual Studio
+*.sdf
+*.opensdf
+*.suo
+ipch/
+
+#Eclipse
+.metadata
+local.properties
+.externalToolBuilders
+
+
+# OS-specific ignore patterns
+
+#Linux
+*~
+# KDE
+.directory
+
+#OSX
+.DS_Store
+*.swp
+*~.nib
+# Thumbnails
+._*
+
+#Windows
+# Windows image file caches
+Thumbs.db
+# Folder config file
+Desktop.ini
+
+#Android
+.csettings
+/libs/openFrameworksCompiled/project/android/paths.make
+
+# Miscellaneous
+.mailmap
+
+/week1-movingRec/bin/data/park6/
+/week1-movingRec/bin/data/park5/
+/week1-movingRec/bin/data/park4/
+/week1-movingRec/bin/data/park3/
+/week1-movingRec/bin/data/park2/
+/week1-movingRec/bin/data/park1/
+/week1-movingRec/bin/data/Archive.zip
