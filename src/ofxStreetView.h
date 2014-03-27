@@ -33,6 +33,7 @@ public:
     
     void        setPanoId(string _pano_id);
     void        setLatLon(double _lat, double _lng);
+    void        setZoom(int _zoom);
     
     void        setUseTexture(bool _bUseTex);
     bool        isTextureLoaded(){return bPanoLoaded;};
@@ -85,12 +86,13 @@ protected:
     string      depth_map_base64;
     
     //  Location
-    int         lat,lon;
+    int         lat,lon,zoom;
     
     //  Flags
     //
     bool        bDataLoaded;
     bool        bPanoLoaded;
+    
     bool        bRegister;
     bool        bTexture;
 };

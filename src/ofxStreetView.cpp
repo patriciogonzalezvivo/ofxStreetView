@@ -15,6 +15,10 @@ ofxStreetView::ofxStreetView(){
     maxDistance = 200;
     bRegister = false;
     bTexture = true;
+    mapWidth = 512;
+    mapHeight = 256;
+    num_zoom_levels = 1;
+    zoom = 1;
 }
 
 ofxStreetView::ofxStreetView(string _pano_id){
@@ -65,7 +69,7 @@ void ofxStreetView::setLatLon(double _lat, double _lon){
     }
     
     clear();
-    data_url = "http://cbk0.google.com/cbk?output=xml&ll="+ofToString(_lat)+","+ofToString(_lon)+"&dm=1&pm=1";
+    data_url = "http://cbk0.google.com/cbk?output=xml&ll="+ofToString(_lat)+","+ofToString(_lon)+"&dm=1";
     ofLoadURLAsync(data_url);
 }
 
@@ -78,8 +82,22 @@ void ofxStreetView::setPanoId(string _pano_id){
     if(_pano_id!=pano_id){
         clear();
         pano_id = _pano_id;
-        data_url = "http://cbk0.google.com/cbk?output=xml&panoid="+pano_id+"&dm=1&pm=1";
+        data_url = "http://cbk0.google.com/cbk?output=xml&panoid="+pano_id+"&dm=1";
         ofLoadURLAsync(data_url);
+    }
+}
+
+void ofxStreetView::setZoom(int _zoom){
+    zoom = _zoom;
+    
+    panoFbo.allocate(getWidth(),getHeight());
+    if(zoom>num_zoom_levels){
+        zoom = num_zoom_levels;
+    }
+    
+    if (bPanoLoaded) {
+        bPanoLoaded = false;
+        downloadPanorama();
     }
 }
 
@@ -94,6 +112,9 @@ void ofxStreetView::urlResponse(ofHttpResponse & response){
         lat = XML.getAttribute("panorama:data_properties", "original_lat", 0.0);
         lon = XML.getAttribute("panorama:data_properties", "original_lng", 0.0);
         num_zoom_levels = XML.getAttribute("panorama:data_properties", "num_zoom_levels", 0);
+        if(zoom>num_zoom_levels){
+            zoom = num_zoom_levels;
+        }
         
         pano_yaw_deg = XML.getAttribute("panorama:projection_properties", "pano_yaw_deg", 0.0);
         tilt_yaw_deg = XML.getAttribute("panorama:projection_properties", "tilt_yaw_deg", 0.0);
@@ -114,29 +135,6 @@ void ofxStreetView::urlResponse(ofHttpResponse & response){
         }
         XML.popTag();
         XML.popTag();
-        
-        bDataLoaded = true;
-        
-        if(bTexture){
-            downloadPanorama();
-        }
-        
-    } else if(response.status==200 && response.request.url.find("http://cbk0.google.com/cbk?output=tile&panoid="+pano_id) == 0){
-        ofImage img;
-        img.loadImage(response.data);
-        panoImages.push_back(img);
-    }
-}
-
-void ofxStreetView::downloadPanorama(){
-    if(!bPanoLoaded){
-        if(pano_id != ""){
-            for(int i = 0; i < 3; i++){
-                for(int j = 0; j < 7; j++){
-                    ofLoadURLAsync("http://cbk0.google.com/cbk?output=tile&panoid="+pano_id+"&zoom=3&x="+ofToString(j)+"&y="+ofToString(i));
-                }
-            }
-        }
         
         //  Decode the depth map ( Credits to Paul Wagener https://github.com/PaulWagener/Streetview-Explorer )
         //  The depth map is encoded as a series of pixels in a 512x256 image. Each pixels refers
@@ -174,7 +172,32 @@ void ofxStreetView::downloadPanorama(){
             //Load depthMapPlanes
             depthmapPlanes = vector<DepthMapPlane> (numPanos);
             memcpy(&depthmapPlanes[0], &depth_map[panoIndicesOffset + mapHeight * mapWidth], numPanos * sizeof (struct DepthMapPlane));
+        }
         
+        bDataLoaded = true;
+        
+        if(bTexture){
+            downloadPanorama();
+        }
+        
+    } else if(response.status==200 && response.request.url.find("http://cbk0.google.com/cbk?output=tile&panoid="+pano_id) == 0){
+        ofImage img;
+        img.loadImage(response.data);
+        panoImages.push_back(img);
+    }
+}
+
+void ofxStreetView::downloadPanorama(){
+    if(!bPanoLoaded){
+        if(pano_id != ""){
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 7; j++){
+                    ofLoadURLAsync("http://cbk0.google.com/cbk?output=tile&panoid="+pano_id+"&zoom="+ofToString(zoom)+"&x="+ofToString(j)+"&y="+ofToString(i));
+                }
+            }
+        }
+        
+        if(depth_map_base64 != ""){
             makeDepthMesh();
         }
     }
@@ -265,11 +288,12 @@ float ofxStreetView::getGroundHeight(){
 }
 
 float ofxStreetView::getWidth(){
-    return 3335;
+
+    return mapWidth*(1.63*powf(2.0, zoom-1));//1.63;//3.26;//6.52;
 }
 
 float ofxStreetView::getHeight(){
-    return 1778;
+    return mapHeight*(1.63*powf(2.0, zoom-1));
 }
 
 ofTexture& ofxStreetView::getTextureReference(){
@@ -333,6 +357,8 @@ void ofxStreetView::update(){
         panoFbo.end();
         
         if(panoImages.size() >= 3*7){
+            
+            
             panoImages.clear();
             bPanoLoaded = true;
         }
