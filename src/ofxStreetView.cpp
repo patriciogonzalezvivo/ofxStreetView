@@ -102,6 +102,10 @@ void ofxStreetView::setZoom(int _zoom){
 }
 
 void ofxStreetView::urlResponse(ofHttpResponse & response){
+    
+    cout << "Status: " << response.status << endl;
+    cout << "Request_url: " << response.request.url << endl;
+    
     if((response.status==200) && (response.request.url == data_url )&& (!bDataLoaded)){
         panoImages.clear();
         
