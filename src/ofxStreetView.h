@@ -41,12 +41,16 @@ public:
     float       getWidth();
 	float       getHeight();
     
+    double      getLat(){return lat;}
+    double      getLon(){return lon;}
     float       getDirection(){return pano_yaw_deg;}
     float       getTiltPitch(){return tilt_pitch_deg;}
     float       getTiltYaw(){return tilt_yaw_deg;}
     float       getGroundHeight();
     
     ofTexture&  getTextureReference();
+    
+    ofTexture   getTextureAt(float _deg, float _amp);
     
     string      getPanoId(){return pano_id;};
     string      getCloseLinkTo(float _deg);
@@ -86,7 +90,8 @@ protected:
     string      depth_map_base64;
     
     //  Location
-    int         lat,lon,zoom;
+    double      lat,lon;
+    int         zoom;
     
     //  Flags
     //

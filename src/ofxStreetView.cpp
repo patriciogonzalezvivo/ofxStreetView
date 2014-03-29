@@ -180,7 +180,7 @@ void ofxStreetView::urlResponse(ofHttpResponse & response){
             downloadPanorama();
         }
         
-    } else if(response.status==200 && response.request.url.find("http://cbk0.google.com/cbk?output=tile&panoid="+pano_id) == 0){
+    } else if(response.request.url.find("http://cbk0.google.com/cbk?output=tile&panoid="+pano_id) == 0){
         ofImage img;
         img.loadImage(response.data);
         panoImages.push_back(img);
@@ -288,8 +288,8 @@ float ofxStreetView::getGroundHeight(){
 }
 
 float ofxStreetView::getWidth(){
-
-    return mapWidth*(1.63*powf(2.0, zoom-1));//1.63;//3.26;//6.52;
+    //1.63;//3.26;//6.52;
+    return mapWidth*(1.63*powf(2.0, zoom-1));
 }
 
 float ofxStreetView::getHeight(){
@@ -302,6 +302,30 @@ ofTexture& ofxStreetView::getTextureReference(){
     }
 
     return panoFbo.getTextureReference();
+}
+
+ofTexture ofxStreetView::getTextureAt(float _deg, float _amp){
+    float widthDeg = getWidth()/360.0;
+    
+    float offsetX = widthDeg*(pano_yaw_deg-360-_deg+90);
+    float amplitud = widthDeg*_amp;
+    
+    ofFbo roi;
+    roi.allocate(widthDeg*_amp, getHeight());
+    
+    roi.begin();
+    ofClear(0,0);
+    
+    getTextureReference().draw(-offsetX+amplitud*0.5-getWidth()*2.0,0);
+    getTextureReference().draw(-offsetX+amplitud*0.5-getWidth(),0);
+    getTextureReference().draw(-offsetX+amplitud*0.5,0);
+    if(offsetX+amplitud>getWidth()){
+        getTextureReference().draw(-offsetX+amplitud*0.5+getWidth(),0);
+    }
+    
+    roi.end();
+    
+    return roi.getTextureReference();
 }
 
 ofImage ofxStreetView::getDepthMap(){
@@ -357,8 +381,6 @@ void ofxStreetView::update(){
         panoFbo.end();
         
         if(panoImages.size() >= 3*7){
-            
-            
             panoImages.clear();
             bPanoLoaded = true;
         }

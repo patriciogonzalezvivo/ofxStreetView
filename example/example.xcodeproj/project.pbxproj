@@ -170,10 +170,10 @@
 		82c342685e3a9be4e7ccff0cdde21583 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				83309f697184ec53252490bf27b8bafe /* base64.cpp */,
 				0c9648078b7e28d697c135aeb1b62539 /* base64.h */,
-				de2b15c57801bee5a34036956f97300b /* ofxStreetView.cpp */,
+				83309f697184ec53252490bf27b8bafe /* base64.cpp */,
 				942be3170d8c7c09177d60c54ab2552f /* ofxStreetView.h */,
+				de2b15c57801bee5a34036956f97300b /* ofxStreetView.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
