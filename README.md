@@ -4,15 +4,15 @@
 Made for my [MFA Thesis](http://patriciogonzalezvivo.com/2014/skylines/) and popularize on the [PointCloudCity Video](http://patriciogonzalezvivo.com/2014/pointcloudcity/)
 
 
-[ ![Williamsburg Bridge](https://farm8.staticflickr.com/7298/14134184803_292e0fb3a0_b_d.jpg) 
+[ ![Williamsburg Bridge](https://farm8.staticflickr.com/7298/14134184803_292e0fb3a0_b_d.jpg) ](http://patriciogonzalezvivo.com/2014/skylines/)
 
-![Washington Sq](https://farm6.staticflickr.com/5498/13923612140_0abfc6c758_b_d.jpg) 
+[ ![Washington Sq](https://farm6.staticflickr.com/5498/13923612140_0abfc6c758_b_d.jpg) ](http://patriciogonzalezvivo.com/2014/skylines/)
 
-![Queensboro Bridge](https://farm8.staticflickr.com/7180/14113516245_ec15ab5cd6_b_d.jpg)
+[ ![Queensboro Bridge](https://farm8.staticflickr.com/7180/14113516245_ec15ab5cd6_b_d.jpg) ](http://patriciogonzalezvivo.com/2014/skylines/)
 
-![Roosevelt Island and Queensboro bridge](https://farm8.staticflickr.com/7401/13926886997_7ec93d13e2_b_d.jpg) 
+[ ![Roosevelt Island and Queensboro bridge](https://farm8.staticflickr.com/7401/13926886997_7ec93d13e2_b_d.jpg) ](http://patriciogonzalezvivo.com/2014/skylines/)
 
-![Île de la Cité, Paris](https://farm3.staticflickr.com/2936/14114245611_0c7b69a0b9_b_d.jpg) ](http://patriciogonzalezvivo.com/2014/skylines/)
+[ ![Île de la Cité, Paris](https://farm3.staticflickr.com/2936/14114245611_0c7b69a0b9_b_d.jpg) ](http://patriciogonzalezvivo.com/2014/skylines/)
 
 
 
