@@ -6,7 +6,7 @@ void ofApp::setup(){
     ofEnableDepthTest();
     
     streetview.setPanoId("y6IoTWYSOZbFBfA1OXCJCA");
-    streetview.setZoom(1);
+    streetview.setZoom(3);
 }
 
 //--------------------------------------------------------------
