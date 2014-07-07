@@ -113,8 +113,17 @@ void ofxStreetView::urlResponse(ofHttpResponse & response){
         XML.loadFromBuffer(response.data);
         
         pano_id = XML.getAttribute("panorama:data_properties", "pano_id", "");
+        
+        text = XML.getValue("panorama:data_properties:text", "");
+        street_range = XML.getValue("panorama:data_properties:street_range",  "");
+        region = XML.getValue("panorama:data_properties:region", "");
+        country = XML.getValue("panorama:data_properties:country", "");
+        
         lat = XML.getAttribute("panorama:data_properties", "original_lat", 0.0);
         lon = XML.getAttribute("panorama:data_properties", "original_lng", 0.0);
+        
+        elevation = XML.getAttribute("panorama:data_properties", "elevation_wgs84_m", -1);
+        
         num_zoom_levels = XML.getAttribute("panorama:data_properties", "num_zoom_levels", 0);
         if(zoom>num_zoom_levels){
             zoom = num_zoom_levels;
@@ -207,6 +216,45 @@ void ofxStreetView::downloadPanorama(){
     }
 }
 
+ofImage ofxStreetView::getDepthMap(){
+    ofImage depthImage;
+    if(bDataLoaded){
+        
+        ofPixels depthPixels;
+        depthImage.allocate(mapWidth, mapHeight, OF_IMAGE_GRAYSCALE);
+        depthPixels.allocate(mapWidth, mapHeight, 1);
+        for (int x = 0; x < mapWidth; x++) {
+            for(int y = 0; y < mapHeight; y++){
+                int planeId = depthmapIndices[y * mapWidth + x];
+                if(planeId>0){
+                    float rad_azimuth = x / (float) (mapWidth - 1.0f) * TWO_PI;
+                    float rad_elevation = y / (float) (mapHeight - 1.0f) * PI;
+                    
+                    ofPoint pos;
+                    pos.x = sin(rad_elevation) * sin(rad_azimuth);
+                    pos.y = sin(rad_elevation) * cos(rad_azimuth);
+                    pos.z = cos(rad_elevation);
+                    
+                    DepthMapPlane plane = depthmapPlanes[planeId];
+                    float dist = plane.d / (pos.x*plane.x + pos.y*plane.y + pos.z*plane.z);
+                    
+                    pos *= dist;
+                    
+                    if(pos.length() > maxDistance){
+                        depthPixels.setColor(x, y,ofColor(0));
+                    } else {
+                        depthPixels.setColor(x, y,ofColor(maxDistance-pos.length()));
+                    }
+                } else {
+                    depthPixels.setColor(x, y,ofColor(0.0));
+                }
+            }
+        }
+        depthImage.setFromPixels(depthPixels);
+    }
+    return depthImage;
+}
+
 void ofxStreetView::makeDepthMesh(){
     meshDepth.clear();
     meshDepth.setMode(OF_PRIMITIVE_TRIANGLES);    
@@ -257,9 +305,12 @@ void ofxStreetView::addVertex(int x, int y){
         normal.set(plane.x,plane.y,plane.z);
     }
     
+    ofVec2f texCoord = ofVec2f((x/(float)mapWidth)*getWidth(),(y/(float)mapHeight)*getHeight());
+    pos *= distance;
+    
     meshDepth.addNormal(normal);
-    meshDepth.addTexCoord(ofVec2f((x/(float)mapWidth)*getWidth(),(y/(float)mapHeight)*getHeight()));
-    meshDepth.addVertex(pos*distance);
+    meshDepth.addTexCoord(texCoord);
+    meshDepth.addVertex(pos);
 }
 
 string ofxStreetView::getCloseLinkTo(float _deg){
@@ -330,41 +381,6 @@ ofTexture ofxStreetView::getTextureAt(float _deg, float _amp){
     roi.end();
     
     return roi.getTextureReference();
-}
-
-ofImage ofxStreetView::getDepthMap(){
-    ofImage depthImage;
-    ofPixels depthPixels;
-    depthImage.allocate(mapWidth, mapHeight, OF_IMAGE_GRAYSCALE);
-    depthPixels.allocate(mapWidth, mapHeight, 1);
-    for (int x = 0; x < mapWidth; x++) {
-        for(int y = 0; y < mapHeight; y++){
-            int planeId = depthmapIndices[y * mapWidth + x];
-            if(planeId>0){
-                float rad_azimuth = x / (float) (mapWidth - 1.0f) * TWO_PI;
-                float rad_elevation = y / (float) (mapHeight - 1.0f) * PI;
-                
-                ofPoint pos;
-                pos.x = sin(rad_elevation) * sin(rad_azimuth);
-                pos.y = sin(rad_elevation) * cos(rad_azimuth);
-                pos.z = cos(rad_elevation);
-                
-                DepthMapPlane plane = depthmapPlanes[planeId];
-                float dist = plane.d / (pos.x*plane.x + pos.y*plane.y + pos.z*plane.z);
-                
-                pos *= dist;
-                
-                if(pos.length() > maxDistance){
-                    depthPixels.setColor(x, y,ofColor(0));
-                } else {
-                    depthPixels.setColor(x, y,ofColor(maxDistance-pos.length()));
-                }
-            } else {
-                depthPixels.setColor(x, y,ofColor(0.0));
-            }
-        }
-    }
-    depthImage.setFromPixels(depthPixels);
 }
 
 void ofxStreetView::update(){

@@ -40,6 +40,7 @@ public:
     
     float       getWidth();
 	float       getHeight();
+    int         getZoom(){return zoom;}
     
     double      getLat(){return lat;}
     double      getLon(){return lon;}
@@ -47,13 +48,17 @@ public:
     float       getTiltPitch(){return tilt_pitch_deg;}
     float       getTiltYaw(){return tilt_yaw_deg;}
     float       getGroundHeight();
+    double      getElevation(){return elevation;}
+    string      getAddress(){return street_range + " " + text;}
+    string      getRegion(){return region;}
+    string      getCountry(){return country;}
+    string      getPanoId(){return pano_id;};
+    string      getCloseLinkTo(float _deg);
+    
     
     ofTexture&  getTextureReference();
     
     ofTexture   getTextureAt(float _deg, float _amp);
-    
-    string      getPanoId(){return pano_id;};
-    string      getCloseLinkTo(float _deg);
     
     int         getDepthMapWidth(){return mapWidth;}
     int         getDepthMapHeight(){return mapHeight;}
@@ -68,6 +73,8 @@ public:
     void        draw();
     
     vector<Link> links;
+    vector<unsigned char> depthmapIndices;
+    vector<DepthMapPlane> depthmapPlanes;
     
 protected:
     void        downloadPanorama();
@@ -80,18 +87,16 @@ protected:
     
     string      data_url;
     string      pano_id;
-    float       pano_yaw_deg,tilt_yaw_deg,tilt_pitch_deg;
-    int         num_zoom_levels;
+    string      text,street_range,region,country;
+    double      pano_yaw_deg,tilt_yaw_deg,tilt_pitch_deg,elevation;
+    int         num_zoom_levels,zoom;
 
     //Depth map information
-    vector<unsigned char> depthmapIndices;
-    vector<DepthMapPlane> depthmapPlanes;
     int         mapWidth, mapHeight, maxDistance;
     string      depth_map_base64;
     
     //  Location
     double      lat,lon;
-    int         zoom;
     
     //  Flags
     //
