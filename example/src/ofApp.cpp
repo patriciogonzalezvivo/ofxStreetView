@@ -5,7 +5,9 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     ofEnableDepthTest();
     
-    streetview.setPanoId("y6IoTWYSOZbFBfA1OXCJCA");
+//    streetview.setLatLon(40.75732,-73.985951);  // Time Sq
+//    streetview.setLatLon(40.768153,-73.981473); // Columbus Circus
+    streetview.setLatLon(40.751511,-73.993953);  // Penn Station
     streetview.setZoom(3);
 }
 

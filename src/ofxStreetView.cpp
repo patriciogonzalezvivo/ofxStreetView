@@ -17,8 +17,8 @@ ofxStreetView::ofxStreetView(){
     bTexture = true;
     mapWidth = 512;
     mapHeight = 256;
-    num_zoom_levels = 1;
-    zoom = 1;
+    num_zoom_levels = 3;
+    zoom = 3;
 }
 
 ofxStreetView::ofxStreetView(string _pano_id){
