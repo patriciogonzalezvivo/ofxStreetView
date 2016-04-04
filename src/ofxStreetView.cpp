@@ -351,12 +351,16 @@ float ofxStreetView::getHeight(){
     return mapHeight*(1.63*powf(2.0, zoom-1));
 }
 
-ofTexture& ofxStreetView::getTextureReference(){
+ofTexture& ofxStreetView::getTexture(){
     if(!panoFbo.isAllocated()){
         panoFbo.allocate(getWidth(),getHeight());
     }
 
-    return panoFbo.getTextureReference();
+    return panoFbo.getTexture();
+}
+
+const ofTexture& ofxStreetView::getTexture() const {
+	return getTexture();
 }
 
 ofTexture ofxStreetView::getTextureAt(float _deg, float _amp){
@@ -371,16 +375,16 @@ ofTexture ofxStreetView::getTextureAt(float _deg, float _amp){
     roi.begin();
     ofClear(0,0);
     
-    getTextureReference().draw(-offsetX+amplitud*0.5-getWidth()*2.0,0);
-    getTextureReference().draw(-offsetX+amplitud*0.5-getWidth(),0);
-    getTextureReference().draw(-offsetX+amplitud*0.5,0);
+    getTexture().draw(-offsetX+amplitud*0.5-getWidth()*2.0,0);
+    getTexture().draw(-offsetX+amplitud*0.5-getWidth(),0);
+    getTexture().draw(-offsetX+amplitud*0.5,0);
     if(offsetX+amplitud>getWidth()){
-        getTextureReference().draw(-offsetX+amplitud*0.5+getWidth(),0);
+        getTexture().draw(-offsetX+amplitud*0.5+getWidth(),0);
     }
     
     roi.end();
     
-    return roi.getTextureReference();
+    return roi.getTexture();
 }
 
 void ofxStreetView::update(){
@@ -390,7 +394,7 @@ void ofxStreetView::update(){
         int x = 0;
         int y = 0;
         for(int i= 0; i < panoImages.size(); i++){
-            panoImages.at(i).draw(x*panoImages.at(i).width, y*panoImages.at(i).height);
+            panoImages.at(i).draw(x*panoImages.at(i).getWidth(), y*panoImages.at(i).getHeight());
             if(x < 6){
                 x++;
             }else{
@@ -410,8 +414,8 @@ void ofxStreetView::update(){
 void ofxStreetView::draw(){
     ofPushMatrix();
     ofRotate(getDirection(), 0, 0, 1);
-    getTextureReference().bind();
+    getTexture().bind();
     meshDepth.draw();
-    getTextureReference().unbind();
+    getTexture().unbind();
     ofPopMatrix();
 }

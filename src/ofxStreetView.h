@@ -37,6 +37,7 @@ public:
     
     void        setUseTexture(bool _bUseTex);
     bool        isTextureLoaded(){return bPanoLoaded;};
+    bool        isUsingTexture() const {return true;};
     
     float       getWidth();
 	float       getHeight();
@@ -56,7 +57,8 @@ public:
     string      getCloseLinkTo(float _deg);
     
     
-    ofTexture&  getTextureReference();
+    ofTexture&  getTexture();
+    const ofTexture& getTexture() const;
     
     ofTexture   getTextureAt(float _deg, float _amp);
     
