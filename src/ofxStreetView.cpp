@@ -195,7 +195,7 @@ void ofxStreetView::urlResponse(ofHttpResponse & response){
         
     } else if(response.request.url.find("http://cbk0.google.com/cbk?output=tile&panoid="+pano_id) == 0){
         ofImage img;
-        img.loadImage(response.data);
+        img.load(response.data);
         panoImages.push_back(img);
     }
 }
